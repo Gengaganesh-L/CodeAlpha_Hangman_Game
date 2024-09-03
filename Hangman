@@ -1,0 +1,104 @@
+import random
+
+stages = [r'''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========
+''', r'''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========
+''', r'''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========
+''', r'''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========
+''', r'''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========
+''', r'''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========
+''', r'''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========
+''']
+
+word_list = ['blitz','blizzard','boggle','bookworm','avenue','awkward','axiom']
+
+lives = 6
+
+chosen_word = random.choice(word_list)
+word_length = len(chosen_word)
+placeholder = "_" * word_length
+correct_letters = []
+
+print("Word to guess: " + placeholder)
+
+game_over = False
+
+while not game_over:
+    print(f"{lives}/6 LIVES LEFT")
+    guess = input("Guess a letter: ").lower()
+
+    if guess in correct_letters:
+        print(f"You already guessed the letter '{guess}'.")
+        continue
+
+    if guess in chosen_word:
+        correct_letters.append(guess)
+        display = ""
+        for letter in chosen_word:
+            if letter in correct_letters:
+                display += letter
+            else:
+                display += "_"
+        placeholder = display
+        print("Word to guess: " + display)
+    else:
+        lives -= 1
+        print(f"'{guess}' is not in the word. You lose a life.")
+        print(stages[lives])
+
+    if "_" not in display:
+        game_over = True
+        print("****************************YOU WIN****************************")
+    elif lives == 0:
+        game_over = True
+        print(f"***********************YOU LOSE**********************")
+
+    print(stages[lives])
